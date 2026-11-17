@@ -17,6 +17,7 @@ Upstream 1.6.0 plus the Yahoo Finance website scraper that upstream removed in 1
 ### Fixed
 
 - `yahoo_web_financials_table` no longer raises `ValueError` on 29 February when building its five-year window.
+- `yahoo_web_valuation_measures` works with Yahoo's newer key-statistics layout, where "Valuation Measures" is an `<h2>` wrapped in extra divs (served on roughly 1 in 4 requests in November 2026). Before, those requests raised `NoDataError`. It now takes the first table after an `<h2>` or `<h3>` heading. Offline fixture `tests/fixtures/yahoo/key_statistics_h2_layout.html`.
 - `yahoo_web_top_mutual_fund_holders` returns only the Top Mutual Fund Holders table. In 1.4.0 it took every row under the parent of "Top Institutional Holders", so the result mixed the major holders summary, the institutional holders, blank rows and the mutual funds (26 rows for AAPL instead of 10), and pandas 3 warned that this will fail in pandas 4. Offline test in `tests/test_yahoo_web_holders_parser.py`.
 
 ### Kept from upstream 1.5.0 and 1.6.0

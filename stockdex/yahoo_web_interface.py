@@ -523,17 +523,25 @@ class YahooWeb(TickerBase):
         # Parse the HTML content of the website
         soup = BeautifulSoup(response.content, "html.parser")
 
-        # find element with test Valuation Measures
-        heading = self.find_parent_by_text(soup, "h3", "Valuation Measures")
-        # Yahoo serves a consent/blocked page to some hosts without the section.
-        if heading is None or heading.parent is None or heading.parent.parent is None:
+        # Yahoo serves two layouts: the original one with an <h3> heading and a
+        # newer one (seen on about 1 in 4 requests in Nov 2026) with an <h2>
+        # wrapped in extra divs. In both, the valuation table is the first
+        # <table> after the heading. Yahoo also serves a consent/blocked page
+        # to some hosts without the section at all.
+        heading = next(
+            (
+                element
+                for element in soup.find_all(["h2", "h3"])
+                if "Valuation Measures" in element.get_text()
+            ),
+            None,
+        )
+        if heading is None:
             raise NoDataError(
                 f"Valuation measures section not found on Yahoo for {self.ticker}"
             )
-        parent_section = heading.parent.parent
 
-        # looking for "table svelte-104jbnt"
-        table = parent_section.find("table")
+        table = heading.find_next("table")
         if table is None or table.find("thead") is None or table.find("tbody") is None:
             raise NoDataError(
                 f"Valuation measures table not found on Yahoo for {self.ticker}"
