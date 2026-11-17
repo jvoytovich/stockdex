@@ -8,7 +8,7 @@ except ModuleNotFoundError as error:
     if error.name != "__version__":
         raise
     # Release automation writes __version__.py; source checkouts need a version too.
-    VERSION = "0.0.0+local"
+    VERSION = "1.6.0+super"
 
 ROOT = Path(__file__).resolve().parent
 

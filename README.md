@@ -13,6 +13,11 @@ Full documentation: [ahnazary.github.io/stockdex](https://ahnazary.github.io/sto
 
 # Stock Data Extractor (Stockdex)
 
+> **jvoytovich fork, `super` branch:** upstream 1.6.0 plus the original Yahoo Finance
+> *website* scraper (`yahoo_web_*`), which upstream removed in 1.5.0. Install it with
+> `pip install "stockdex[mcp] @ git+https://github.com/jvoytovich/stockdex@super"`.
+> See the top of [CHANGELOG.md](CHANGELOG.md). `main` tracks upstream unchanged.
+
 Stockdex is a Python package that provides a simple interface to get financial data from various sources in pandas DataFrames and Plotly figures.
 
 <br />

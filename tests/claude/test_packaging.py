@@ -43,7 +43,7 @@ def setup_kwargs(monkeypatch, tmp_path):
 @pytest.mark.parametrize("release_version", [None, "9.8.7"])
 def test_version_fallback(monkeypatch, tmp_path, release_version):
     captured = run_setup(monkeypatch, tmp_path, release_version)
-    assert captured["version"] == (release_version or "0.0.0+local")
+    assert captured["version"] == (release_version or "1.6.0+super")
 
 
 def test_python_floor_matches_pandas(setup_kwargs):
